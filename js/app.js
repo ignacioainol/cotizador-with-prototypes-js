@@ -5,6 +5,38 @@ function Seguro(marca, year, tipo) {
     this.tipo = tipo;
 }
 
+//realiza la cotizacion con los datos
+Seguro.prototype.cotizarSeguro = function () {
+    /**
+     * 1 = Americano 1.15
+     * 2 = Asiatico  1.05
+     * 3 = Europeo 1.35
+     */
+
+    let cantidad;
+    const base = 2000;
+
+    switch (this.marca) {
+        case '1':
+            cantidad = base * 1.15;
+            break;
+        case '2':
+            cantidad = base * 1.05;
+            break;
+        case '3':
+            cantidad = base * 1.35;
+            break;
+        default:
+            break;
+    }
+
+    //leer el año
+    const diferencia = new Date().getFullYear() - this.year;
+    //cada año que la diferencia es mayor, el costo va a reducirse un 3%
+    cantidad -= ((diferencia * 3) * cantidad) / 100;
+    console.log(cantidad);
+}
+
 function UI() { }
 
 //llena las opciones de los años
@@ -75,5 +107,5 @@ function cotizarSeguro(e) {
 
     //instanciar el seguro
     const seguro = new Seguro(marca, year, tipoCobertura);
-    console.log(seguro);
+    seguro.cotizarSeguro();
 }
